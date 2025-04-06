@@ -276,11 +276,23 @@ class PlayerSpaceship(SphereCollideObject):
 
         print(shooter + ' is DONE.')
         Missile.Intervals[shooter].finish()
+
+    def RemoveCameraDefenseModels(self):
+        # Search for all nodes with names that contain "CameraDefense"
+        for nodePath in self.render.findAllMatches("**/CameraDefense*"):
+            if not nodePath.isEmpty():
+                # print(f"Removing node: {nodePath.getName()}")
+                nodePath.removeNode()
     
     def DestroyObject(self, hitID, hitPosition):
         # Unity also has a find method, yet it is very inefficient if used anywhere but at the beginning of the program. 
         nodeID = self.render.find(hitID)
-        nodeID.detachNode()
+        
+        if not nodeID.isEmpty():
+            nodeID.detachNode()
+        else:
+            print(f"Error: The Node with ID '{hitID}' can't be found. Unable to detach.")
+            return
 
         pattern = r'[0-9]'
         strippedString = re.sub(pattern, '', hitID)

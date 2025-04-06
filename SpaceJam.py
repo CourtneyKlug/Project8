@@ -12,6 +12,8 @@ from direct.showbase.ShowBase import ShowBase
 from panda3d.core import WindowProperties
 from panda3d.core import AudioSound
 from panda3d.core import loadPrcFileData
+from panda3d.core import PNMImage
+from panda3d.core import Notify
 loadPrcFileData('', 'notify-level-ffmpeg error')
 
 class MyApp(ShowBase):
@@ -56,6 +58,7 @@ class MyApp(ShowBase):
         self.current_texture_index = 0  # Start with the first texture
 
         self.accept("t", self.textureChange)
+        self.Hero.RemoveCameraDefenseModels()
 
     def SetScene(self):
         self.Universe = spaceJamClasses.Universe(self.loader, "./Assets/Universe/Universe.x", self.render, 'Universe', "./Assets/Universe/jeremy-thomas-4dpAqfTbvKA-unsplash.jpg", (0, 0, 0), 15000)
